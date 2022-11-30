@@ -15,10 +15,17 @@ const codeList = [
 //Select Element:
 const $displayCodeBox = $(".display-code");
 // display code
-function displayNewCode() {
+function getRandomCode() {
   // get random index from array
-  // display random element
-  $displayCodeBox.text(codeList[0]);
+  const randomIndex = Math.floor(Math.random() * codeList.length);
+  // return random element
+  return codeList[randomIndex];
+}
+function displayNewCode() {
+  // get randomeCode, assign into new variable
+  const newCode = getRandomCode();
+  // display new code into displayCodeBox
+  $displayCodeBox.text(newCode);
 }
 $(() => {
   displayNewCode();
