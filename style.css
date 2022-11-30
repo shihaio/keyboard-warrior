@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  /* background-color: #ffe600; */
+}
+.container {
+  /* background-color: #00ffff; */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-feature {
+  width: 60%;
+  /* background-color: blanchedalmond; */
+}
+.display-code {
+  width: 100%;
+  height: 10rem;
+  border: solid 2px teal;
+  border-radius: 1rem;
+  padding: 1rem;
+  /* background-color: blueviolet; */
+  margin-bottom: 1rem;
+}
+.input-code {
+  width: 100%;
+  height: 10rem;
+  border: solid 2px teal;
+  border-radius: 1rem;
+  padding: 1rem;
+  /* background-color: coral; */
+}
+.nav-bar {
+  background-color: teal;
+}
