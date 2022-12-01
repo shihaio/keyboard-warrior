@@ -14,19 +14,13 @@ const codeList = [
 ];
 //Select Element:
 const $displayCodeBox = $(".display-code");
-// display code
-function getRandomCode() {
-  // get random index from array
-  const randomIndex = Math.floor(Math.random() * codeList.length);
-  // return random element
-  return codeList[randomIndex];
-}
+
+// display new code
 function displayNewCode() {
-  // get randomeCode, assign into new variable
-  const newCode = getRandomCode();
-  // display new code into displayCodeBox
-  $displayCodeBox.text(newCode);
+  const randomIndex = Math.floor(Math.random() * codeList.length);
+  $displayCodeBox.text(codeList[randomIndex]);
 }
+
 $(() => {
   displayNewCode();
 });
