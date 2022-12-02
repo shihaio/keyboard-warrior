@@ -23,15 +23,14 @@ function compareValue() {
   // compare the every character between displayCodeBox.text() and inputCodeBox.val()
   const randomIndex = Math.floor(Math.random() * codeList.length);
   //create a new array
-  const codeDisplayStrToArr = codeList[randomIndex].split("");
+  
   const codeInputStrToArr = $inputCodeBox.val().split("");
-  codeDisplayStrToArr.forEach((character) => {
-    const $newCharacter = $("<span>").text(character);
-    $(".display-code").append($newCharacter);
-  });
+  
   codeInputStrToArr.forEach((inputCharacter, index) => {
-    console.log("inputCharacter:", inputCharacter);
-    console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
+
+    // create a HTML (span) element with class "correct"
+    // console.log("inputCharacter:", inputCharacter);
+    // console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
   });
   // var html = "";
   // for (let i = 0; i < splitCode.length; i++){
@@ -43,6 +42,14 @@ function compareValue() {
 function displayNewCode() {
   const randomIndex = Math.floor(Math.random() * codeList.length);
   // $displayCodeBox.text("apple");
+  // Split the question into an array of characters
+  const codeDisplayStrToArr = "apple".split("");
+  // Create span for each character of the array
+  codeDisplayStrToArr.forEach((character) => {
+    const $newDisplayCharacter = $("<span>").text(character);
+    // insert content in span tag into display-code
+    $(".display-code").append($newDisplayCharacter);
+  });
 }
 
 // transfer displayNewCode a inputNewCode
