@@ -19,16 +19,20 @@ const $inputCodeBox = $(".input-code");
 $inputCodeBox.on("input", compareValue);
 
 function compareValue() {
-  $displayCodeBox.text("");
   // compare the every character between displayCodeBox.text() and inputCodeBox.val()
-  const randomIndex = Math.floor(Math.random() * codeList.length);
-  //create a new array
-  
-  const codeInputStrToArr = $inputCodeBox.val().split("");
-  
-  codeInputStrToArr.forEach((inputCharacter, index) => {
+  // select all the span of displayCode
+  const displayCharacterArray = $("span");
 
-    // create a HTML (span) element with class "correct"
+  // Character from textarea split into array of input character.
+  const codeInputStrToArr = $inputCodeBox.val().split("");
+  codeInputStrToArr.forEach((inputCharacter, index) => {
+    // if both character match add class correct into span of display charcater code.
+    if (inputCharacter === displayCharacterArray.eq(index).text()) {
+      displayCharacterArray.eq(index).addClass("correct");
+    } else {
+      // if both character don't macth add class incorrect into span of display character code.
+      displayCharacterArray.eq(index).addClass("incorrect");
+    }
     // console.log("inputCharacter:", inputCharacter);
     // console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
   });
@@ -40,6 +44,7 @@ function compareValue() {
 }
 // display new code
 function displayNewCode() {
+  $displayCodeBox.text("");
   const randomIndex = Math.floor(Math.random() * codeList.length);
   // $displayCodeBox.text("apple");
   // Split the question into an array of characters
@@ -50,12 +55,6 @@ function displayNewCode() {
     // insert content in span tag into display-code
     $(".display-code").append($newDisplayCharacter);
   });
-}
-
-// transfer displayNewCode a inputNewCode
-function transferCode() {
-  let typedCode = $inputCodeBox.val();
-  return typedCode;
 }
 
 // create compare value function
@@ -70,6 +69,4 @@ function transferCode() {
 
 $(() => {
   displayNewCode();
-  const codeInput = transferCode();
-  console.log(codeInput);
 });
