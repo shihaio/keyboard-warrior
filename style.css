@@ -37,3 +37,9 @@ body {
 .nav-bar {
   background-color: teal;
 }
+.correct {
+  color: green;
+}
+.incorrect {
+  color: red;
+}

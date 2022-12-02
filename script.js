@@ -14,22 +14,43 @@ const codeList = [
 ];
 //Select Element:
 const $displayCodeBox = $(".display-code");
-const $inputCode = $(".input-code");
+const $inputCodeBox = $(".input-code");
 
-$inputCode.on("input", () => console.log($inputCode.val()));
-// $inputCode.val().on("input");
+$inputCodeBox.on("input", compareValue);
 
+function compareValue() {
+  $displayCodeBox.text("");
+  // compare the every character between displayCodeBox.text() and inputCodeBox.val()
+  const randomIndex = Math.floor(Math.random() * codeList.length);
+  //create a new array
+  const codeDisplayStrToArr = codeList[randomIndex].split("");
+  const codeInputStrToArr = $inputCodeBox.val().split("");
+  codeDisplayStrToArr.forEach((character) => {
+    const $newCharacter = $("<span>").text(character);
+    $(".display-code").append($newCharacter);
+  });
+  codeInputStrToArr.forEach((inputCharacter, index) => {
+    console.log("inputCharacter:", inputCharacter);
+    console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
+  });
+  // var html = "";
+  // for (let i = 0; i < splitCode.length; i++){
+  //   html += "<span class="test">" + splitCode[i] + "</span>";
+  // }
+  // document.getElementById('demo').innerHTML = html;
+}
 // display new code
 function displayNewCode() {
   const randomIndex = Math.floor(Math.random() * codeList.length);
-  $displayCodeBox.text(codeList[randomIndex]);
+  // $displayCodeBox.text("apple");
 }
 
 // transfer displayNewCode a inputNewCode
 function transferCode() {
-  let typedCode = $inputCode.val();
+  let typedCode = $inputCodeBox.val();
   return typedCode;
 }
+
 // create compare value function
 // displayCodeBox VS
 
