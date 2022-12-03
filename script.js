@@ -20,6 +20,8 @@ $inputCodeBox.on("input", compareValue);
 
 function compareValue() {
   // compare the every character between displayCodeBox.text() and inputCodeBox.val()
+  // set initial result:
+  let result;
   // select all the span of displayCode
   const displayCharacterArray = $("span");
 
@@ -29,9 +31,14 @@ function compareValue() {
     // if both character match add class correct into span of display charcater code.
     if (inputCharacter === displayCharacterArray.eq(index).text()) {
       displayCharacterArray.eq(index).addClass("correct");
+      result = true;
     } else {
       // if both character don't macth add class incorrect into span of display character code.
       displayCharacterArray.eq(index).addClass("incorrect");
+      result = false;
+    }
+    if (result) {
+      displayNewCode();
     }
     // console.log("inputCharacter:", inputCharacter);
     // console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
@@ -48,7 +55,7 @@ function displayNewCode() {
   const randomIndex = Math.floor(Math.random() * codeList.length);
   // $displayCodeBox.text("apple");
   // Split the question into an array of characters
-  const codeDisplayStrToArr = "apple".split("");
+  const codeDisplayStrToArr = codeList[randomIndex].split("");
   // Create span for each character of the array
   codeDisplayStrToArr.forEach((character) => {
     const $newDisplayCharacter = $("<span>").text(character);
