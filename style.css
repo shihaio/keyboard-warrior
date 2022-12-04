@@ -38,10 +38,10 @@ body {
   background-color: teal;
 }
 .correct {
+  background-color: lightgreen;
   color: green;
-  font-size: 2rem;
 }
 .incorrect {
+  background-color: pink;
   color: red;
-  font-size: 3rem;
 }

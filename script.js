@@ -1,78 +1,101 @@
-// $(document).ready(printLabel);
+/**
+ * 1. display new code with span
+ *
+ *
+ *    1a. if correct display correct color
+ *
+ *    1b. if wrong display wrong color
+ *
+ *    1c. otherwise, display black
+ *
+ * 2. check whether input is right or wrong
+ *
+ *    2a. read user input
+ *
+ *    2b. check if user input match code
+ *
+ *    2c. if character match, display right color
+ *
+ *    2d. if character is undefined, display black color
+ *
+ *    2e. if character does not match, display wrong color
+ *
+ *    NOTE: 2f. Once all character matches, we change to another question. clear input text box
+ *
+ * 3. display result
+ *  */
 
-// Global variable
-const codeList = [`Apple`, `Banana`, `Carrot`, `Durian`, `Eggplant`];
-//Select Element:
-const $displayCodeBox = $(".display-code");
-const $inputCodeBox = $(".input-code");
+const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
 
-// 1) set the foundation first
-// Objective: to pick any number
+// Element Sectors.
+const inputCodeBox = $(".input-code"); // select element using jQuery, player inputs code here
+const displayCodeBox = $(".display-code"); // select element using jQuery, display code here
+let initialCodeArray; // declare a variable without assignment
 
-const randomIndex = Math.floor(Math.random() * codeList.length);
-const randomCode = codeList[randomIndex]
-const displa
-// function compareValue() {
-//   // compare the every character between displayCodeBox.text() and inputCodeBox.val()
-//   // set initial result:
-//   let result = true;
-//   // select all the span of displayCode
-//   const displayCharacterArray = document.querySelectorAll("span"); // array of span [span, span, span]
-//   // Character from textarea split into array of input character.
-//   const codeInputStrToArr = $inputCodeBox.val().split("");
-//   // console.log(codeInputStrToArr);
-//   displayCharacterArray.forEach((displayCharacter, index) => {
-//     const inputCharacter = codeInputStrToArr[index];
-//     // if both character match add class correct into span of display charcater code.
-//     if (!inputCharacter) {
-//       displayCharacter.classList.remove("correct");
-//       displayCharacter.classList.remove("incorrect");
-//       console.log("huhu");
-//       result = false;
-//     }
-//     if (displayCharacter.innerText === inputCharacter) {
-//       // change the sequence here
-//       displayCharacter.classList.add("correct");
-//       displayCharacter.classList.remove("incorrect");
-//       console.log("this letter is true");
-//       // result = true; // use boolean to assess the result
-//     } else {
-//       // if both character don't macth add class incorrect into span of display character code.
-//       displayCharacter.classList.add("incorrect");
-//       displayCharacter.classList.remove("correct");
-//       result = false;
-//     }
-//   });
-//   if (result) {
-//     console.log("all true");
-//     displayNewCode();
-//     $inputCodeBox.val("");
-//   }
-// }
-// // display new code
-// function displayNewCode() {
-//   $displayCodeBox.text("");
-//   const randomIndex = Math.floor(Math.random() * codeList.length);
-//   // Split the question into an array of characters
-//   const codeDisplayStrToArr = codeList[randomIndex].split("");
-//   // Create span for each character of the array
-//   codeDisplayStrToArr.forEach((character) => {
-//     const $newDisplayCharacter = $("<span>").text(character);
-//     // insert content in span tag into display-code
-//     $(".display-code").append($newDisplayCharacter);
-//   });
-// }
+// Step 1:
+const formatCode = (code) => {
+  initialCodeArray = code.split(""); // ["a","p","p","l","e"]
+  const codeArray = initialCodeArray.slice(); // ["a","p","p","l","e"]
 
-// create compare value function
-// displayCodeBox VS
+  for (let i = 0; i < codeArray.length; i++) {
+    const character = codeArray[i];
+    // codeArray[i] = `<span class="correct>${character}</span>`;
+    // codeArray[i] = `<span class="incorrect>${character}</span>`;
+    codeArray[i] = `<span>${character}</span>`;
+  }
+  const formattedCode = codeArray.join("");
+  return formattedCode; // <span>a</span><span>p></span>
+};
 
-// const typedCode = $(".input-code").val();
-// console.log(typedCode);
-// create a function that compare between displayNewCode and inputNewCode
+const displayNewCode = () => {
+  const randomIndex = Math.floor(Math.random() * codeList.length);
+  const randomCode = codeList[randomIndex];
+  const displayCode = formatCode(randomCode);
+  displayCodeBox.html(displayCode);
+  inputCodeBox.val("");
+};
 
-// Check acurracy
-// Move to next round
+displayNewCode();
 
-// $(() => {
-//   displayNewCode();
-// });
+const compareValues = (inputValue) => {
+  // Step 2a
+  const inputValueArray = inputValue.split(""); // ['b','a','n','n','a','a']
+  let result = true;
+
+  // Step 2b
+  initialCodeArray.forEach((character, index) => {
+    // Step 2c + 3
+    // if the user type correctly
+    if (character === inputValueArray[index]) {
+      $(`pre.display-code > span:eq(${index})`).toggleClass("correct", true);
+      $(`pre.display-code > span:eq(${index})`).toggleClass("incorrect", false);
+
+      // Step 2d + 3
+      // if user havent type any charcter
+    } else if (inputValueArray[index] === undefined) {
+      $(`pre.display-code > span:eq(${index})`).toggleClass("correct", false);
+      $(`pre.display-code > span:eq(${index})`).toggleClass("incorrect", false);
+      result = false;
+
+      // Step 2e + 3
+      // if user key in incorrect character
+    } else {
+      $(`pre.display-code > span:eq(${index})`).toggleClass("correct", false);
+      $(`pre.display-code > span:eq(${index})`).toggleClass("incorrect", true);
+      result = false;
+    }
+  });
+
+  // step 2f
+  // consolidate the result
+  // if all matches, move to another question
+  if (result === true) {
+    displayNewCode();
+  }
+};
+
+const handleInput = (event) => {
+  // Step 2
+  compareValues(event.target.value);
+};
+inputCodeBox.on("input", handleInput);
