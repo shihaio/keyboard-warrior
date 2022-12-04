@@ -1,68 +1,67 @@
 // $(document).ready(printLabel);
-const codeList = [
-  `dinosaurs.forEach((apple) => {
-  console.log(apple); 
-});`,
-  `$("p").remove(".test, .demo");`,
-  `$(this).removeClass("incorrect")`,
-  `while (alive) {
-    east();
-    sleep();
-    code();
-    repeat();
-  }`,
-];
+
+// Global variable
+const codeList = [`Apple`, `Banana`, `Carrot`, `Durian`, `Eggplant`];
 //Select Element:
 const $displayCodeBox = $(".display-code");
 const $inputCodeBox = $(".input-code");
 
-$inputCodeBox.on("input", compareValue);
+// 1) set the foundation first
+// Objective: to pick any number
 
-function compareValue() {
-  // compare the every character between displayCodeBox.text() and inputCodeBox.val()
-  // set initial result:
-  let result;
-  // select all the span of displayCode
-  const displayCharacterArray = $("span");
-
-  // Character from textarea split into array of input character.
-  const codeInputStrToArr = $inputCodeBox.val().split("");
-  codeInputStrToArr.forEach((inputCharacter, index) => {
-    // if both character match add class correct into span of display charcater code.
-    if (inputCharacter === displayCharacterArray.eq(index).text()) {
-      displayCharacterArray.eq(index).addClass("correct");
-      result = true;
-    } else {
-      // if both character don't macth add class incorrect into span of display character code.
-      displayCharacterArray.eq(index).addClass("incorrect");
-      result = false;
-    }
-    if (result) {
-      displayNewCode();
-    }
-    // console.log("inputCharacter:", inputCharacter);
-    // console.log(`codeDisplayStrToArr[${index}]:`, codeDisplayStrToArr[index]);
-  });
-  // var html = "";
-  // for (let i = 0; i < splitCode.length; i++){
-  //   html += "<span class="test">" + splitCode[i] + "</span>";
-  // }
-  // document.getElementById('demo').innerHTML = html;
-}
-// display new code
-function displayNewCode() {
-  $displayCodeBox.text("");
-  const randomIndex = Math.floor(Math.random() * codeList.length);
-  // $displayCodeBox.text("apple");
-  // Split the question into an array of characters
-  const codeDisplayStrToArr = codeList[randomIndex].split("");
-  // Create span for each character of the array
-  codeDisplayStrToArr.forEach((character) => {
-    const $newDisplayCharacter = $("<span>").text(character);
-    // insert content in span tag into display-code
-    $(".display-code").append($newDisplayCharacter);
-  });
-}
+const randomIndex = Math.floor(Math.random() * codeList.length);
+const randomCode = codeList[randomIndex]
+const displa
+// function compareValue() {
+//   // compare the every character between displayCodeBox.text() and inputCodeBox.val()
+//   // set initial result:
+//   let result = true;
+//   // select all the span of displayCode
+//   const displayCharacterArray = document.querySelectorAll("span"); // array of span [span, span, span]
+//   // Character from textarea split into array of input character.
+//   const codeInputStrToArr = $inputCodeBox.val().split("");
+//   // console.log(codeInputStrToArr);
+//   displayCharacterArray.forEach((displayCharacter, index) => {
+//     const inputCharacter = codeInputStrToArr[index];
+//     // if both character match add class correct into span of display charcater code.
+//     if (!inputCharacter) {
+//       displayCharacter.classList.remove("correct");
+//       displayCharacter.classList.remove("incorrect");
+//       console.log("huhu");
+//       result = false;
+//     }
+//     if (displayCharacter.innerText === inputCharacter) {
+//       // change the sequence here
+//       displayCharacter.classList.add("correct");
+//       displayCharacter.classList.remove("incorrect");
+//       console.log("this letter is true");
+//       // result = true; // use boolean to assess the result
+//     } else {
+//       // if both character don't macth add class incorrect into span of display character code.
+//       displayCharacter.classList.add("incorrect");
+//       displayCharacter.classList.remove("correct");
+//       result = false;
+//     }
+//   });
+//   if (result) {
+//     console.log("all true");
+//     displayNewCode();
+//     $inputCodeBox.val("");
+//   }
+// }
+// // display new code
+// function displayNewCode() {
+//   $displayCodeBox.text("");
+//   const randomIndex = Math.floor(Math.random() * codeList.length);
+//   // Split the question into an array of characters
+//   const codeDisplayStrToArr = codeList[randomIndex].split("");
+//   // Create span for each character of the array
+//   codeDisplayStrToArr.forEach((character) => {
+//     const $newDisplayCharacter = $("<span>").text(character);
+//     // insert content in span tag into display-code
+//     $(".display-code").append($newDisplayCharacter);
+//   });
+// }
 
 // create compare value function
 // displayCodeBox VS
@@ -74,6 +73,6 @@ function displayNewCode() {
 // Check acurracy
 // Move to next round
 
-$(() => {
-  displayNewCode();
-});
+// $(() => {
+//   displayNewCode();
+// });

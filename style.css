@@ -39,7 +39,9 @@ body {
 }
 .correct {
   color: green;
+  font-size: 2rem;
 }
 .incorrect {
   color: red;
+  font-size: 3rem;
 }

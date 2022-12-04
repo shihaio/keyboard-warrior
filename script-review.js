@@ -32,3 +32,16 @@ function functionX() {
 // Compare between the value between the boxes display and input
 
 $(() => {});
+const codeList = [
+  `dinosaurs.forEach((apple) => {
+  console.log(apple); 
+});`,
+  `$("p").remove(".test, .demo");`,
+  `$(this).removeClass("incorrect")`,
+  `while (alive) {
+    east();
+    sleep();
+    code();
+    repeat();
+  }`,
+];
