@@ -26,6 +26,7 @@
  *  */
 
 const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
+let codeListDisplay;
 
 // Element Sectors.
 const inputCodeBox = $(".input-code"); // select element using jQuery, player inputs code here
@@ -48,14 +49,20 @@ const formatCode = (code) => {
 };
 
 const displayNewCode = () => {
-  const randomIndex = Math.floor(Math.random() * codeList.length);
-  const randomCode = codeList[randomIndex];
-  const displayCode = formatCode(randomCode);
-  displayCodeBox.html(displayCode);
-  inputCodeBox.val("");
+  if (codeListDisplay.length > 0) {
+    const randomIndex = Math.floor(Math.random() * codeListDisplay.length);
+    const randomCode = codeListDisplay[randomIndex];
+    codeListDisplay.splice(randomIndex, 1);
+    const displayCode = formatCode(randomCode);
+    displayCodeBox.html(displayCode);
+    inputCodeBox.val("");
+    console.log("codeListDisplay:", codeListDisplay);
+  } else {
+    endGame();
+  }
 };
 
-displayNewCode();
+// displayNewCode();
 
 const compareValues = (inputValue) => {
   // Step 2a
@@ -99,3 +106,58 @@ const handleInput = (event) => {
   compareValues(event.target.value);
 };
 inputCodeBox.on("input", handleInput);
+/* Timing: 
+1. setMaxTime = 10; 
+  set TimerBoxWidth = 100%
+2. declare remainingTime ( declare only, will assign remaining Time = maxTIme in function starterTime), because we need to set remainingTime = maxTime in everyTime startTimer() run
+3. start to calculateTIme by repeat functon reduceTime Untill Time === 0
+  3.1. Set remainingTime = maxTime
+  3.2. Reduce remainingTime; & Rerduce TimerBoxWidth by remainingTIme% 
+  3.3. If remainingTIme === 0:
+      + Stop decreaseTime
+      + Reduce TimerBoxWidth = 0
+      + DisplayNewCode();
+      + setTimer() again
+*/
+
+// Timer
+
+// const maxTime = 10;
+// let remainingTime;
+// let runningTimeInterval;
+
+// const stopTime = () => {
+//   console.log("end");
+//   cleanInterval(runningTimeInterval);
+//   return;
+// };
+
+// const decreaseTime = () => {
+//   remainingTime--;
+//   const remainingWidth = remainingTime / 10;
+//   timerBox.css("width", `${remainingWidth}%`);
+//   timerText.text(`{$remainingTime}`);
+//   if (remainingTime === 0) {
+//     stopTime();
+//     displayNewCode();
+//     startTimer();
+//     return;
+//   } else {
+//     console.log(remainingTime);
+//   }
+// };
+
+// const startTimer = () => {
+//   remainingTime = maxTime;
+//   timerBox.css("width", "100%");
+//   runningTimeInterval = setInterval(decreaseTime, 1000);
+// };
+
+//---------------------------ENDGAME--------------------------
+
+
+$(document).ready(function () {
+  codeListDisplay = codeList.slice();
+  displayNewCode();
+  // startTimer();
+});

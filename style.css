@@ -4,6 +4,8 @@
 }
 body {
   min-height: 100vh;
+  background-color: rgb(4, 2, 0.15);
+  color: white;
   /* background-color: #ffe600; */
 }
 .container {
@@ -44,4 +46,18 @@ body {
 .incorrect {
   background-color: pink;
   color: red;
+}
+
+.timer-box {
+  height: 1rem;
+  background-color: yellow;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+}
+
+.timer-text {
+  font-size: 2rem;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 1rem;
 }
