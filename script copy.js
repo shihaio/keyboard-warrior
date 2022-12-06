@@ -26,7 +26,7 @@
  *  */
 
 // const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
-const codeList = [`apple`, `banana`, `charlie`, `delta`];
+const codeList = [`apple`, `banana`];
 let codeListDisplay;
 
 // Element Sectors.
@@ -37,17 +37,10 @@ const modalEndGame = $(".modal-endgame");
 const container = $(".container");
 const timerText = $(".timer-text");
 const timerBox = $(".timer-box");
-const cpsBox = $(".character-per-count"); // box to store cps
-const restartButton = $("#restart-game");
-let totalTimeSpent = 0;
-let totalCharacterTyped = 0;
-let cps = 0; // totalCharacterTyped / totalTimeSpent;
-let stopGame;
-
-// Seletion for Timing:
-const maxTime = 10;
-let remainingTime;
-let runingTimeInterval;
+const cpsBox = $(".character-per-count");
+let cps; //codeListDisplay.length / 10
+let accTime;
+let doneText;
 // Step 1:
 const formatCode = (code) => {
   initialCodeArray = code.split(""); // ["a","p","p","l","e"]
@@ -69,10 +62,10 @@ const displayNewCode = () => {
     const randomIndex = Math.floor(Math.random() * codeListDisplay.length);
     const randomCode = codeListDisplay[randomIndex];
     codeListDisplay.splice(randomIndex, 1);
-    stopGame = !codeListDisplay.length;
     const displayCode = formatCode(randomCode);
     displayCodeBox.html(displayCode);
     inputCodeBox.val("");
+    console.log("codeListDisplay:", codeListDisplay);
   } else {
     endGame();
   }
@@ -113,13 +106,7 @@ const compareValues = (inputValue) => {
   // consolidate the result
   // if all matches, move to another question
   if (result === true) {
-    const currentTimeSpend = maxTime - remainingTime;
-    const currentCharacterTyped = inputValueArray.length;
-    totalCharacterTyped = totalCharacterTyped += currentCharacterTyped;
-    totalTimeSpent = totalTimeSpent + currentTimeSpend;
-    cps = totalCharacterTyped / totalTimeSpent;
     displayNewCode();
-    return;
   }
 };
 
@@ -144,34 +131,35 @@ inputCodeBox.on("input", handleInput);
 
 // Timer
 
+const maxTime = 10;
+let remainingTime;
+let runningTimeInterval;
+
 const stopTime = () => {
-  clearInterval(runingTimeInterval);
+  console.log("end");
+  clearInterval(runningTimeInterval);
   return;
 };
+
 const decreaseTime = () => {
-  remainingTime--; // 10 9 8 7 6 5 4 3 2 1 0
-  timerText.text(remainingTime);
-  timerBox.css("width", "0%");
-  timerBox.css("background-color", "cyan");
-  timerBox.css("transition", `${maxTime - 1}s linear`);
-  if (remainingTime < 0) {
+  remainingTime--;
+
+  if (remainingTime === 0) {
     stopTime();
     displayNewCode();
     startTimer();
     return;
+  } else {
+    const remainingWidth = remainingTime / 10;
+    timerBox.css("width", `${remainingWidth}%`);
+    timerText.text(`${remainingTime}`);
   }
 };
+
 const startTimer = () => {
-  if (codeListDisplay.length > 0) {
-    remainingTime = maxTime;
-    timerBox.css("transition", "none");
-    timerBox.css("background-color", "yellow");
-    timerBox.css("width", "100%");
-    timerText.text(maxTime);
-    runingTimeInterval = setInterval(decreaseTime, 1000);
-  } else {
-    return;
-  }
+  remainingTime = maxTime;
+  // timerBox.css("width", "100%");
+  runningTimeInterval = setInterval(decreaseTime, 1000);
 };
 
 //---------------------------ENDGAME--------------------------
@@ -179,14 +167,15 @@ function endGame() {
   modalEndGame.css("display", "block"); // show modal-endgame
   container.css("display", "none"); // hide container box
   timerText.css("display", "none");
-  cpsBox.text(cps);
+  cpsBox.text(4);
 }
 
-restartButton.on("click", () => {
-  window.location.reload();
-});
+window.BeforeUnloadEvent();
 
 $(document).ready(function () {
   codeListDisplay = codeList.slice();
   displayNewCode();
+  // startTimer();
 });
+
+// -----------------RESTART-BUTTON------------
