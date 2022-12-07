@@ -43,6 +43,8 @@ let totalTimeSpent = 0;
 let totalCharacterTyped = 0;
 let cps = 0; // totalCharacterTyped / totalTimeSpent;
 let stopGame;
+let combineTypedCharacters;
+let combineCharactersArray;
 
 // Seletion for Timing:
 const maxTime = 10;
@@ -55,8 +57,8 @@ const formatCode = (code) => {
 
   for (let i = 0; i < codeArray.length; i++) {
     const character = codeArray[i];
-    // codeArray[i] = `<span class="correct>${character}</span>`;
-    // codeArray[i] = `<span class="incorrect>${character}</span>`;
+    // codeArray[i] = `<span class="correct">${character}</span>`;
+    // codeArray[i] = `<span class="incorrect">${character}</span>`;
     codeArray[i] = `<span>${character}</span>`;
   }
   const formattedCode = codeArray.join("");
@@ -71,8 +73,8 @@ const displayNewCode = () => {
     codeListDisplay.splice(randomIndex, 1);
     stopGame = !codeListDisplay.length;
     const displayCode = formatCode(randomCode);
-    displayCodeBox.html(displayCode);
-    inputCodeBox.val("");
+    displayCodeBox.html(displayCode); // SH: this shows an object.
+    inputCodeBox.val(""); // SH: this shows an object.
   } else {
     endGame();
   }
@@ -109,10 +111,19 @@ const compareValues = (inputValue) => {
     }
   });
 
+  // Store code into array
+  storeCodeArray = () => {
+    combineTypedCharacters = inputValueArray.join("");
+    combineCharactersArray = [];
+    combineCharactersArray.push(combineTypedCharacters);
+    console.log(combineCharactersArray);
+  };
+
   // step 2f
   // consolidate the result
   // if all matches, move to another question
   if (result === true) {
+    storeCodeArray();
     const currentTimeSpend = maxTime - remainingTime;
     const currentCharacterTyped = inputValueArray.length;
     totalCharacterTyped = totalCharacterTyped += currentCharacterTyped;
@@ -190,3 +201,12 @@ $(document).ready(function () {
   codeListDisplay = codeList.slice();
   displayNewCode();
 });
+
+/*
+
+1) Store the input code into codeEncounteredArray
+2) Use push method to do it and store element
+---> declare a variable and assign it with
+---> let storeCodeTypedArray = [];
+Display codeEncounteredArray in endGame fn
+*/
