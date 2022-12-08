@@ -98,16 +98,21 @@ body {
   border-radius: 1rem;
   border: grey solid 2px;
   padding: 1rem;
-  /* text-align: center; */
+  text-align: center;
+  /* display: inline-block; */
+  /* text-decoration: underline; */
   color: white;
+
+  margin-bottom: 1rem;
 }
 .record-element {
   background-color: cyan;
   border: rgb(208, 255, 0) solid 2px;
-  display: inline-block;
   padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 1rem;
+  display: inline-block;
 }
 .title-result {
   text-decoration: underline;

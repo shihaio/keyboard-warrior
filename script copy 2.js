@@ -26,27 +26,12 @@
  *  */
 // const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
 const codeList = [
-  { title: "DOM-jquery : select element", code: `("div")`, timing: 5 },
-  {
-    title: "forEach method",
-    code: `[1,2,3].forEach((item) => { console.log(item)})`,
-    timing: 10,
-  },
-  {
-    title: "DOM-jquery : create element",
-    code: `("<div>").text("apple").addClass("fruit")`,
-    timing: 10,
-  },
-  {
-    title: "DOM-jquery : add attribute",
-    code: `(".fruit").css("background-color", "red")`,
-    timing: 10,
-  },
-  {
-    title: "Variable",
-    code: `const myName = "teddy"`,
-    timing: 10,
-  },
+  `apple`,
+  `banana`,
+  // `orange`,
+  // `durian`,
+  // `papaya`,
+  // `watermelon`,
 ];
 const codeListDisplay = codeList.slice();
 // Element Sectors.
