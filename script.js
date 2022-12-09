@@ -25,29 +25,7 @@
  * 3. display resultCode
  *  */
 // const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
-const codeList = [
-  { title: "DOM-jquery : select element", code: `("div")`, timing: 5 },
-  {
-    title: "forEach method",
-    code: `[1,2,3].forEach((item) => { console.log(item)})`,
-    timing: 10,
-  },
-  {
-    title: "DOM-jquery : create element",
-    code: `("<div>").text("apple").addClass("fruit")`,
-    timing: 10,
-  },
-  {
-    title: "DOM-jquery : add attribute",
-    code: `(".fruit").css("background-color", "red")`,
-    timing: 10,
-  },
-  {
-    title: "Variable",
-    code: `const myName = "teddy"`,
-    timing: 10,
-  },
-];
+const codeList = [`apple`, `banana`, `orange`];
 const codeListDisplay = codeList.slice();
 // Element Sectors.
 const inputCodeBox = $(".input-code"); // select element using jQuery, player inputs code here
@@ -66,11 +44,12 @@ let totalCharacterTyped = 0;
 let cps = 0; // totalCharacterTyped / totalTimeSpent;
 let recordElementArray = []; // ["apple"]
 let gameInRunning; // condition to keep the game running
-let testFruitLength = codeListDisplay.length;
+// let testFruitLength = codeListDisplay.length;
 // Seletion for Timing:
-const maxTime = 5;
+const maxTime = 10;
 let remainingTime;
 let runingTimeInterval;
+
 // Step 1:
 const formatCode = (code) => {
   initialCodeArray = code.split(""); // ["a","p","p","l","e"]
@@ -88,12 +67,11 @@ const displayNewCode = () => {
   if (gameInRunning) {
     startTimer();
     const randomIndex = Math.floor(Math.random() * codeListDisplay.length);
-    // console.log("codeListDisplay", codeListDisplay);
     const randomCode = codeListDisplay[randomIndex];
     codeListDisplay.splice(randomIndex, 1);
     const displayCode = formatCode(randomCode);
-    displayCodeBox.html(displayCode); // SH: this shows an object.
-    inputCodeBox.val(""); // SH: this shows an object.
+    displayCodeBox.html(displayCode);
+    inputCodeBox.val("");
   } else {
     endGame();
   }
@@ -146,9 +124,18 @@ const compareValues = (inputValue) => {
     const currentCharacterTyped = inputValueArray.length;
     totalCharacterTyped = totalCharacterTyped += currentCharacterTyped;
     totalTimeSpent = totalTimeSpent + currentTimeSpend;
-    cps = totalCharacterTyped / totalTimeSpent;
+    cps = (totalCharacterTyped / totalTimeSpent).toFixed(2);
+
     displayNewCode();
     return;
+  }
+  // condition when the last question typing wrong, and timeout, it will go to endGame()
+  if (
+    resultCode === false &&
+    remainingTime < 0 &&
+    codeListDisplay.length === 0
+  ) {
+    endGame();
   }
 };
 
@@ -188,10 +175,6 @@ const decreaseTime = () => {
     displayNewCode();
     // startTimer();
     return;
-  }
-  // condition when the last question typing wrong, and timeout, it will go to endGame()
-  if (remainingTime < 0 && codeListDisplay.length === 0) {
-    endGame();
   }
 };
 const startTimer = () => {

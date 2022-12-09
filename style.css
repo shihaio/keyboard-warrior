@@ -135,3 +135,7 @@ body {
   color: white;
   text-align: center;
 }
+.code {
+  display: none;
+}
+

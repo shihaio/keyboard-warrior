@@ -25,15 +25,50 @@
  * 3. display resultCode
  *  */
 // const codeList = [`apple`, `banana`, `charlie`, `delta`, `echo`];
+// const codeList = [
+//   { title: "DOM-jquery : select element", code: `("div")`, timing: 5 },
+//   {
+//     title: "forEach method",
+//     code: `[1,2,3].forEach((item) => { console.log(item)})`,
+//     timing: 10,
+//   },
+//   {
+//     title: "DOM-jquery : create element",
+//     code: `("<div>").text("apple").addClass("fruit")`,
+//     timing: 10,
+//   },
+//   {
+//     title: "DOM-jquery : add attribute",
+//     code: `(".fruit").css("background-color", "red")`,
+//     timing: 10,
+//   },
+//   {
+//     title: "Variable",
+//     code: `const myName = "teddy"`,
+//     timing: 10,
+//   },
+// ];
+
 const codeList = [
-  `apple`,
-  `banana`,
-  // `orange`,
-  // `durian`,
-  // `papaya`,
-  // `watermelon`,
+  { title: "DOM-jquery : select element", code: `apple`, timing: 5 },
+  {
+    title:
+      "Datatypes : A string is made up of characters, it is wrapped in quotes or backticks.",
+    code: `String`,
+    timing: 5,
+  },
+  {
+    title:
+      "Datatypes : Numbers, in JavaScript can be both integers and floating point numbers (numbers with decimals).",
+    code: `Numbers`,
+    timing: 5,
+  },
+  { title: "Datatypes : A variable can be made up of letters, numbers and some characters (like _ and $)", code: `variables`, timing: 5 },
+  { title: "Datatypes : select element", code: `apple`, timing: 5 },
 ];
+
 const codeListDisplay = codeList.slice();
+let currentCodeDisplayObject; //{ title: "DOM-jquery : select element", code: `apple`, timing: 5 },
 // Element Sectors.
 const inputCodeBox = $(".input-code"); // select element using jQuery, player inputs code here
 const displayCodeBox = $(".display-code"); // select element using jQuery, display code here
@@ -53,7 +88,7 @@ let recordElementArray = []; // ["apple"]
 let gameInRunning; // condition to keep the game running
 let testFruitLength = codeListDisplay.length;
 // Seletion for Timing:
-const maxTime = 5;
+const maxTime = 10;
 let remainingTime;
 let runingTimeInterval;
 // Step 1:
@@ -73,12 +108,12 @@ const displayNewCode = () => {
   if (gameInRunning) {
     startTimer();
     const randomIndex = Math.floor(Math.random() * codeListDisplay.length);
-    // console.log("codeListDisplay", codeListDisplay);
-    const randomCode = codeListDisplay[randomIndex];
+    currentCodeDisplayObject = codeListDisplay[randomIndex];
+    const randomCode = currentCodeDisplayObject.code; // "apple"
     codeListDisplay.splice(randomIndex, 1);
     const displayCode = formatCode(randomCode);
     displayCodeBox.html(displayCode); // SH: this shows an object.
-    inputCodeBox.val(""); // SH: this shows an object.
+    inputCodeBox.val(""); //
   } else {
     endGame();
   }
@@ -116,8 +151,8 @@ const compareValues = (inputValue) => {
   });
 
   // Store code into array
-  storeCodeArray = (inputValue) => {
-    recordElementArray.push(inputValue);
+  storeCodeArray = (item) => {
+    recordElementArray.push(item); //array of displayCodeObject :{ title: "DOM-jquery : select element", code: `apple`, timing: 5 },
   };
 
   // Display store code array
@@ -126,14 +161,24 @@ const compareValues = (inputValue) => {
   // consolidate the resultCode
   // if all matches, move to another question
   if (resultCode === true) {
-    storeCodeArray(inputValue);
+    storeCodeArray(currentCodeDisplayObject);
+
     const currentTimeSpend = maxTime - remainingTime;
+
     const currentCharacterTyped = inputValueArray.length;
     totalCharacterTyped = totalCharacterTyped += currentCharacterTyped;
     totalTimeSpent = totalTimeSpent + currentTimeSpend;
     cps = totalCharacterTyped / totalTimeSpent;
     displayNewCode();
     return;
+  }
+  // condition when the last question typing wrong, and timeout, it will go to endGame()
+  if (
+    resultCode === false &&
+    remainingTime < 0 &&
+    codeListDisplay.length === 0
+  ) {
+    endGame();
   }
 };
 
@@ -175,9 +220,9 @@ const decreaseTime = () => {
     return;
   }
   // condition when the last question typing wrong, and timeout, it will go to endGame()
-  if (remainingTime < 0 && codeListDisplay.length === 0) {
-    endGame();
-  }
+  // if (remainingTime < 0 && codeListDisplay.length === 0) {
+  //   endGame();
+  // }
 };
 const startTimer = () => {
   if (codeListDisplay.length > 0) {
@@ -195,7 +240,9 @@ const startTimer = () => {
 //---------------------------ENDGAME--------------------------
 function addRecordElement() {
   recordElementArray.forEach((item) => {
-    const newRecordElement = $("<div>").text(item).addClass("record-element");
+    const newRecordElement = $("<div>")
+      .text(item.title)
+      .addClass("record-element");
     codeEncounteredBox.append(newRecordElement);
   });
 }
@@ -228,3 +275,9 @@ Display codeEncounteredArray in endGame fn
 // take element from recordElementArray ,
 //show it in <div class="record-element">element</div> ,
 //put inside element have class "code-encounted"
+
+//---------------------------ENOUNTERCODE HOVER--------------------------
+$("div.record-element").hover((event) => {
+  console.log(event.target.children);
+  event.target.children().css("background-color", "red");
+});
