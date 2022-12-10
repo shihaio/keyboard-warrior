@@ -1,29 +1,3 @@
-/**
- * 1. display new code with span
- *
- *
- *    1a. if correct display correct color
- *
- *    1b. if wrong display wrong color
- *
- *    1c. otherwise, display black
- *
- * 2. check whether input is right or wrong
- *
- *    2a. read user input
- *
- *    2b. check if user input match code
- *
- *    2c. if character match, display right color
- *
- *    2d. if character is undefined, display black color
- *
- *    2e. if character does not match, display wrong color
- *
- *    NOTE: 2f. Once all character matches, we change to another question. clear input text box
- *
- * 3. display resultCode
- *  */
 const codeList = [
   `const display = "Hello World"`,
   `let resultCode = true;`,
@@ -47,7 +21,6 @@ const codeList = [
   `[1,2,3].unshift()`,
 ];
 
-console.log("codeList.length:", codeList.length);
 const codeListDisplay = codeList.slice();
 
 // Element Sectors.
@@ -69,13 +42,13 @@ let maxQuestion = 5; // condition to keep the game running
 // let gameInRunning = maxQuestion > 0;
 
 // Seletion for Timing:
-const maxTime = 30;
+const maxTime = 20;
 let remainingTime;
 let runingTimeInterval;
 
 // Step 1:
 const formatCode = (code) => {
-  initialCodeArray = code.split(""); // ["h". "u", "h", "u"]
+  const initialCodeArray = code.split(""); // ["h". "u", "h", "u"]
   const codeArray = initialCodeArray.slice(); // ["a","p","p","l","e"]
   for (let i = 0; i < codeArray.length; i++) {
     const character = codeArray[i];
@@ -101,10 +74,7 @@ const displayNewCode = () => {
   }
 };
 
-// displayNewCode();
-
 const compareValues = (inputValue) => {
-  console.log("maxQuestion:", maxQuestion);
   // Step 2a
   const inputValueArray = inputValue.split(""); // ['b','a','n','n','a','a']
   let resultCode = true;
@@ -116,7 +86,6 @@ const compareValues = (inputValue) => {
     if (character === inputValueArray[index]) {
       $(`pre.display-code > span:eq(${index})`).toggleClass("correct", true);
       $(`pre.display-code > span:eq(${index})`).toggleClass("incorrect", false);
-
       // Step 2d + 3
       // if user havent type any charcter
     } else if (inputValueArray[index] === undefined) {
@@ -134,7 +103,7 @@ const compareValues = (inputValue) => {
   });
 
   // Store code into array
-  storeCodeArray = (inputValue) => {
+  const storeCodeArray = (inputValue) => {
     recordElementArray.push(inputValue);
   };
 
@@ -167,26 +136,6 @@ const handleInput = (event) => {
   compareValues(event.target.value);
 };
 inputCodeBox.on("input", handleInput);
-/* Timing: 
-1. setMaxTime = 10; 
-  set TimerBoxWidth = 100%
-2. declare remainingTime ( declare only, will assign remaining Time = maxTIme in function starterTime), because we need to set remainingTime = maxTime in everyTime startTimer() run
-3. start to calculateTIme by repeat functon reduceTime Untill Time === 0
-  3.1. Set remainingTime = maxTime
-  3.2. Reduce remainingTime; & Rerduce TimerBoxWidth by remainingTIme% 
-  3.3. If remainingTIme === 0:
-      + Stop decreaseTime
-      + Reduce TimerBoxWidth = 0
-      + DisplayNewCode();
-      + setTimer() again
-*/
-
-// ----------------------------Timer-------------------------------------
-
-// const stopTime = () => {
-//   clearInterval(runingTimeInterval);
-//   return;
-// };
 
 const startTimer = () => {
   if (maxQuestion > 0) {
@@ -240,16 +189,3 @@ restartButton.on("click", () => {
 $(document).ready(function () {
   displayNewCode();
 });
-
-/*
-
-1) Store the input code into codeEncounteredArray
-2) Use push method to do it and store element
----> declare a variable and assign it with
----> let storeCodeTypedArray = [];
-Display codeEncounteredArray in endGame fn
-*/
-
-// take element from recordElementArray ,
-//show it in <div class="record-element">element</div> ,
-//put inside element have class "code-encounted"
