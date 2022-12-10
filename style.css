@@ -36,6 +36,7 @@ body {
   border: solid 2px teal;
   border-radius: 1rem;
   padding: 1rem;
+  margin-top: 1rem;
   /* background-color: coral; */
 }
 .nav-bar {
@@ -55,6 +56,8 @@ body {
   background-color: yellow;
   margin-bottom: 1rem;
   border-radius: 1rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 .timer-text {
@@ -106,13 +109,14 @@ body {
   margin-bottom: 1rem;
 }
 .record-element {
-  background-color: cyan;
+  background-color: teal;
   border: rgb(208, 255, 0) solid 2px;
   padding: 0.5rem 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 1rem;
   display: inline-block;
+  margin-right: 0.5rem;
 }
 .title-result {
   text-decoration: underline;
@@ -126,16 +130,17 @@ body {
 }
 
 #restart-game {
-  background-color: blue;
+  background-color: cyan;
   width: 200px;
   font-size: 20px;
   padding: 10px;
   border-radius: 5px;
-  border: 3px solid yellow;
-  color: white;
+  border: 3px solid rgb(#323335);
+  color: rgb(#323335);
   text-align: center;
+  margin: 0 auto;
+  display: block;
 }
 .code {
   display: none;
 }
-
